@@ -11,7 +11,7 @@ export async function sendVerifyEmail(user: types.User): Promise<void> {
 
     await postgres.createVerification(user.id, token);
 
-    const url = `${process.env.BACKEND_URL}/user/verify/${token}`;
+    const url = `${process.env.BACKEND_URL}/users/verify/${token}`;
     const emailTemplate = emails.getVerificationEmail(url);
 
     await resend.emails.send({

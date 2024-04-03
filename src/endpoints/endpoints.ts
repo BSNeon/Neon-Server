@@ -8,7 +8,7 @@ export async function handleApi(req: express.Request, res: express.Response): Pr
     const path = req.path;
     let paths = path.split('/');
 
-    switch (paths[2]) {
+    switch (paths[1]) {
         case 'users':
             await handleUserApi(req, res).catch((err) => {
                 console.error(err);
