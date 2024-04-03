@@ -1,6 +1,9 @@
 export type User = {
-    id: number;
+    id: string;
     name: string;
     email: string;
     role: 'admin' | 'user' | 'unverified';
-}
+    emailVerified: boolean;
+    beatLeaderLink: string;
+    scoreSaberLink: string;
+};

@@ -1,5 +1,7 @@
 import * as postgres from 'pg';
 
+export * from './users/users';
+
 let client: postgres.Client;
 
 export async function connect() {
@@ -48,5 +50,15 @@ async function createTables() {
         );
     `).catch((err) => {
         console.error('Error creating table users', err);
+    });
+
+    await cclient.query(`
+        CREATE TABLE IF NOT EXISTS email_verification (
+            id SERIAL PRIMARY KEY,
+            userid VARCHAR(255) NOT NULL,
+            token VARCHAR(255) NOT NULL
+        );
+    `).catch((err) => {
+        console.error('Error creating table email_verification', err);
     });
 }
