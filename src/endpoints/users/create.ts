@@ -6,12 +6,14 @@ const emailRegex = "^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 export async function handleCreateUser(req: express.Request, res: express.Response): Promise<void> {
     
     if (!req.body) {
-        res.status(400).send('Bad Request');
+        const rejJson = { type: 'error', code: 3011, message: 'Bad Request' }
+        res.status(400).json(rejJson);
         return;
     }
 
     if (!req.body.email || !req.body.password || !req.body.username) {
-        res.status(400).send('Missing Fields');
+        const rejJson = { type: 'error', code: 3012, message: 'Missing Parameters' }
+        res.status(400).json(rejJson);
         return;
     }
     
@@ -22,28 +24,33 @@ export async function handleCreateUser(req: express.Request, res: express.Respon
     const username = body.username;
 
     if (!email.match(emailRegex)) {
-        res.status(400).send('Invalid Email');
+        const rejJson = { type: 'error', code: 3001, message: 'Invalid Email'}
+        res.status(400).json(rejJson);
         return;
     }
 
     if (password.length < 8) {
-        res.status(400).send('Invalid Password');
+        const rejJson = { type: 'error', code: 3002, message: 'Invalid Password'}
+        res.status(400).send(rejJson);
         return;
     }
 
     if (username.length < 3 || username.length > 20 || !username.match("^[a-zA-Z0-9]*$")) {
-        res.status(400).send('Invalid Username');
+        const rejJson = { type: 'error', code: 3003, message: 'Invalid Username'}
+        res.status(400).send(rejJson);
         return;
     }
 
     const result = await createUser({ email, password, name: username }).catch((err) => {
         console.error(err);
-        res.status(500).send('Internal Server Error');
+        const rejJson = { type: 'error', code: 5001, message: 'Database Error'}
+        res.status(500).json(rejJson);
         return;
     });
 
     if (result === null) {
-        res.status(400).send('User with email already exists');
+        const rejJson = { type: 'error', code: 3201, message: 'User with email already exists'}
+        res.status(400).json(rejJson);
         return;
     }
 

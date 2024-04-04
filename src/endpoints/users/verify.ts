@@ -22,7 +22,8 @@ export async function handleVerifyEmail(req: express.Request, res: express.Respo
 
     let result = await postgres.verifyEmail(token).catch((err) => {
         console.error(err);
-        res.status(500).send('Internal Server Error');
+        const rejJson = { type: 'error', code: 5001, message: 'Database Error'}
+        res.status(500).json(rejJson);
         return;
     });
 
@@ -31,9 +32,7 @@ export async function handleVerifyEmail(req: express.Request, res: express.Respo
         res.redirect(`${frontendUrl}`);
         return;
     }
-
-    console.log(result);
-
+    
     const frontendUrl = process.env.FRONTEND_URL;
     res.redirect(`${frontendUrl}/verified?id=${result.id}`);
 }

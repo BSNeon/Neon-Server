@@ -1,0 +1,18 @@
+# Format error
+
+Invalid Email (Register): 3001
+Invalid Password (Register): 3002 
+Invalid Username (Register): 3003
+
+Email Taken (Register): 3201
+Invalid Password / Account not found (Login): 3202
+
+Bad Request: 3011
+Missing Parameters: 3012
+
+# Server Errors
+
+Unknown Error: 5000
+Database Error: 5001
+
+# Success: 2001
