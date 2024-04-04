@@ -15,4 +15,6 @@ Missing Parameters: 3012
 Unknown Error: 5000
 Database Error: 5001
 
+Unauthorized: 4001
+
 # Success: 2001

@@ -1,5 +1,6 @@
 import * as postgres from '../postgres';
 import * as types from '../../types/types';
+import jwt from 'jsonwebtoken';
 
 interface UserRow {
     userid: string;
@@ -37,10 +38,20 @@ async function fetchUserByQuery(query: string, params: any[]): Promise<types.Use
 
 export async function getUserByEmail(email: string): Promise<types.User | null> {
     const query = 'SELECT * FROM users WHERE email = $1';
-    return fetchUserByQuery(query, [email]);
+    return await fetchUserByQuery(query, [email]);
 }
 
 export async function getUserById(userid: string): Promise<types.User | null> {
     const query = 'SELECT * FROM users WHERE userid = $1';
-    return fetchUserByQuery(query, [userid]);
+    return await fetchUserByQuery(query, [userid]);
+}
+
+export async function getUserByJWT(token: string): Promise<types.User | null> {
+    try {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as { id: string };
+        const userId = decodedToken.id;
+        return await getUserById(userId);
+    } catch (error) {
+        return null;
+    }
 }

@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { handleUserApi } from './users/users';
+import { handleProfileApi } from './profile/profile';
 
 
 export async function handleApi(req: express.Request, res: express.Response): Promise<void> {
@@ -11,6 +12,13 @@ export async function handleApi(req: express.Request, res: express.Response): Pr
     switch (paths[1]) {
         case 'users':
             await handleUserApi(req, res).catch((err) => {
+                console.error(err);
+                res.status(500).send('Internal Server Error');
+            });
+            break;
+        
+        case 'profile':
+            await handleProfileApi(req, res).catch((err) => {
                 console.error(err);
                 res.status(500).send('Internal Server Error');
             });
