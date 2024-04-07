@@ -3,13 +3,17 @@ import * as postgres from '../../database/postgres';
 import * as types from '../../types/types';
 
 export async function handleProfileInfo(req: express.Request, res: express.Response) {
-    if (!req.cookies || !req.cookies['token']) {
+    console.log(req.cookies);
+    if (!req.cookies.token) {
         const rejJson = { type: 'error', code: 4001, message: 'Unauthorized' };
         res.status(401).send(rejJson);
         return;
     }
     
     const cookie = req.cookies['token'];
+
+    console.log(req.cookies);
+
     if (!cookie) {
         const rejJson = { type: 'error', code: 4001, message: 'Unauthorized' };
         res.status(401).send(rejJson);

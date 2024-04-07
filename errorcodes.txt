@@ -6,6 +6,7 @@ Invalid Username (Register): 3003
 
 Email Taken (Register): 3201
 Invalid Password / Account not found (Login): 3202
+Email not Verified: 3203
 
 Bad Request: 3011
 Missing Parameters: 3012

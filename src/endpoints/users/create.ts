@@ -31,13 +31,13 @@ export async function handleCreateUser(req: express.Request, res: express.Respon
 
     if (password.length < 8) {
         const rejJson = { type: 'error', code: 3002, message: 'Invalid Password'}
-        res.status(400).send(rejJson);
+        res.status(400).json(rejJson);
         return;
     }
 
     if (username.length < 3 || username.length > 20 || !username.match("^[a-zA-Z0-9]*$")) {
         const rejJson = { type: 'error', code: 3003, message: 'Invalid Username'}
-        res.status(400).send(rejJson);
+        res.status(400).json(rejJson);
         return;
     }
 

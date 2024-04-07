@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id = "email" type="text" placeholder="Email">
+    <input id = "password" type="text" placeholder="Password">
+    <input id = "username" type="text" placeholder="Username">
+    <button id = "button">Submit</button> <button id = "register">Register</button>
+    <button id = "info">Get Info</button>
+
+    <script>
+        document.getElementById("button").addEventListener("click", async function(){
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            
+            const backendUrl = "http://127.0.0.1:5069/users/login";
+
+            // request with email and password in the body
+            let res = await fetch(backendUrl, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+            })
+
+            console.log(res);
+            const data = await res.json();
+            console.log(data);
+        });
+
+        document.getElementById("register").addEventListener("click", async function(){
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var username = document.getElementById("username").value;
+            
+            const backendUrl = "http://127.0.0.1:5069/users/create";
+
+            // request with email and password in the body
+            let res = await fetch(backendUrl, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    username: username
+                }),
+            });
+
+            console.log(res);
+            const data = await res.json();
+            console.log(data);
+        });
+
+        document.getElementById("info").addEventListener("click", async function(){
+            // get /profile/info and log the response
+            const profileUrl = "http://localhost:5069/profile/info";
+            let profileRes = await fetch(profileUrl, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log(profileRes);
+            const profileData = await profileRes.json();
+            console.log(profileData);
+        });
+    </script>
+</body>
+</html>
