@@ -1,9 +1,14 @@
 {
     "compilerOptions": {
+      "lib": [
+        "ESNext",
+        "DOM",
+        "DOM.Iterable"
+      ],
       "strict": true,
       "forceConsistentCasingInFileNames": true,
-      "module": "commonjs",
-      "target": "ESNext",
+      "target": "ES6",
+      "module": "CommonJS",
       "noImplicitAny": true,
       "removeComments": true,
       "preserveConstEnums": true,

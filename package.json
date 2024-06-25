@@ -2,7 +2,7 @@
   "name": "neon-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "deps": "npm i -g yarn typescript ts-node nodemon && yarn",
     "dev": "ts-node ./src/index.ts",
