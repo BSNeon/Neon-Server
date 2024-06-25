@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
       "module": "commonjs",
       "target": "ESNext",
       "noImplicitAny": true,
@@ -10,7 +12,8 @@
       "moduleResolution": "node",
       "resolveJsonModule": true,
       "esModuleInterop": true,
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "experimentalDecorators": true
     },
     "include": ["./src/**/*"],
     "exclude": ["node_modules"]

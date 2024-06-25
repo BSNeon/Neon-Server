@@ -1,37 +1,33 @@
-import express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import { config } from 'dotenv';
+import "reflect-metadata";
+import path from "path";
+import * as dotenv from "dotenv";
+import { readdirSync } from "fs";
+import express from "express";
+import { setupRoutes } from "./router";
+import moment from "moment";
 
-import router from './router';
+dotenv.config({path: __dirname + "/../../.env"});
 
-config();
+const folders = readdirSync(path.join(__dirname, "routes"));
+for (var i = 0; i < folders.length; i++) {
+    const files = readdirSync(path.join(__dirname, "routes", folders[i]));
+    for (let j = 0; j < files.length; j++) {
+        require(`./routes/${folders[i]}/${files[j]}`);
+    }
+}
 
-const app = express();
+async function main(): Promise<void> {
+    moment.locale("en-uk");
+    const time = moment().format("YYYY-MM-DD HH:MM:SS");
+    const http = 5000;
+    const app = express();
 
-app.use(cors({
-    credentials: true,
-}));
+    setupRoutes(app);
 
-app.use(compression());
-app.use(cookieParser());
-app.use(bodyParser.json());
+    app.listen(http, () => {
+        console.log(`Listening to port ${http} | http://localhost:${http}`);
+        console.log(`Server online as of ${time}`);
+    });
+}   
 
-const server = http.createServer(app);
-
-server.listen(process.env.SERVER_PORT, () => {
-    console.log(`Server is running on port ${process.env.SERVER_PORT}`);
-});
-
-mongoose.Promise = Promise;
-const uri = process.env.MONGO_URI;
-mongoose.connect(uri);
-mongoose.connection.on('error', (error: Error) => {
-    console.error(error);
-});
-
-app.use('/', router());
+main();
