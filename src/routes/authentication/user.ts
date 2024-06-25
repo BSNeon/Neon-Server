@@ -1,3 +1,4 @@
+import db from "../../db";
 import { GET, POST } from "../../router";
 import { Request, Response } from "express";
 
@@ -8,14 +9,15 @@ class UserAuthentication {
         // eslint-disable-next-line curly
         if (!req.params) res.sendStatus(404);
 
-        if (req.params.id !== "76561199108042297") {
+        const user = await db("users")
+            .select("*")
+            .where("platform_id", req.params.id)
+            .orderBy("date", "desc")
+            .first();
+        
+        if (req.params.id !== user) {
             res.sendStatus(500);
         }
-        
-        let user = [
-            "Raine Aeternal",
-            200
-        ];
         
         res.json({user: user});
     }
